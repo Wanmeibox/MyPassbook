@@ -189,6 +189,7 @@
 					<span class="mui-icon mui-icon-left-nav"></span>
 				</button>
 				<h1 class="mui-center mui-title">MyPassbook</h1>
+				<button id="main_sync" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">同步</button>
 			</div>
 			<!--页面标题栏结束-->
 			<!--页面主内容区开始-->
@@ -209,6 +210,9 @@
 						<ul class="mui-table-view mui-table-view-chevron">
 							<li class="mui-table-view-cell">
 								<a href="#notifications" class="mui-navigate-right">新消息通知</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a href="#class_edit" class="mui-navigate-right">新增分类</a>
 							</li>
 							<li class="mui-table-view-cell">
 								<a href="#site_edit" class="mui-navigate-right">编辑项</a>
@@ -322,6 +326,34 @@
 				</div>
 			</div>
 		</div>
+		<div id="class_edit" class="mui-page">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav">
+				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+					<span class="mui-icon mui-icon-left-nav"></span>返回
+				</button>
+				<h1 class="mui-center mui-title"></h1>
+				<button id="class_edit_done" class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">完成</button>
+<!--				<a class="mui-icon mui-icon-bars mui-pull-right"></a>-->
+			</div>
+			<div class="mui-page-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul id="class_edit_name" class="mui-table-view mui-table-view-radio mui-table-input-view">
+							<li class="mui-table-view-cell mui-input-row">
+                                <label>名称</label>
+                                <input id="class_edit_input" type="text" class="mui-input-clear" placeholder="请输入">
+                            </li>
+						</ul>
+						
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell item-delete">
+								删除该类
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div id="site_edit" class="mui-page">
 			<div class="mui-navbar-inner mui-bar mui-bar-nav">
 				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
@@ -384,7 +416,9 @@
 	<script src="js/jquery.js "></script>
 	<script src="js/mui.min.js "></script>
 	<script src="js/mui.view.js "></script>
+	<script src="js/md5.js "></script>
 	<script src="js/common.js "></script>
+	<script src="js/api.js "></script>
 	<script>
 		mui.init();
 		//初始化单页view
@@ -421,6 +455,18 @@
 			});
 		})(mui);
 
+        mui('body').on('tap','#main_sync',function(){
+            api_set();
+        });
+        
+        mui('body').on('tap','#class_edit_done',function(){
+            api_set($('#class_edit_input').val());
+        });
+        
+        
+        api_get(function(res){
+            $('#class_edit_input').val(res.data)
+        });
         
         //mui('#site_edit').on('tap','')
         var arr = ['账号','密码','邮箱','登录密码','交易密码','查询密码','密保问题','密保答案'];
